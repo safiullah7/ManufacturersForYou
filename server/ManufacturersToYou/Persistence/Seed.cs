@@ -20,7 +20,7 @@ namespace Persistence
                     {
                         Name = "IPhone 11",
                         Description = "Brand new iPhone 11",
-                        Category = "Phones",
+                        // Category = "Phones",
                         Price = 150.7M,
                         OldPrice = 160.5M,
                         ImageUrl = "some url"
@@ -29,7 +29,7 @@ namespace Persistence
                     {
                         Name = "IPhone 11 Pro",
                         Description = "Brand new iPhone 11 Pro",
-                        Category = "Phones",
+                        // Category = "Phones",
                         Price = 170.7M,
                         OldPrice = 180.5M,
                         ImageUrl = "some url"
@@ -38,7 +38,7 @@ namespace Persistence
                     {
                         Name = "IPhone X",
                         Description = "Brand new iPhone X",
-                        Category = "Phones",
+                        // Category = "Phones",
                         Price = 130.7M,
                         OldPrice = 140.5M,
                         ImageUrl = "some url"
@@ -47,7 +47,7 @@ namespace Persistence
                     {
                         Name = "IPhone 8",
                         Description = "Brand new iPhone 8",
-                        Category = "Phones",
+                        // Category = "Phones",
                         Price = 110.7M,
                         OldPrice = 110.5M,
                         ImageUrl = "some url"

@@ -48,7 +48,7 @@ namespace Application.Products
 
                 product.Name = request.Name ?? product.Name;
                 product.Description = request.Description ?? product.Description;
-                product.Category = request.Category ?? product.Category;
+                // product.Category = request.Category ?? product.Category;
                 if (product.Price != request.Price && request.Price != null)
                 {
                     product.OldPrice = product.Price;

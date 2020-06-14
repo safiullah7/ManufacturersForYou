@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
-    public class manufacturer
+    public class Manufacturer
     {
-        public string Category { get; set; }
+        public Guid Id { get; set; }
+        public string City { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
