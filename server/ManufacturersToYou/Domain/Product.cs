@@ -12,6 +12,7 @@ namespace Domain
         public decimal Price { get; set; }
         public decimal OldPrice { get; set; }
         public string ImageUrl { get; set; }
+        // public string City { get; set; }
         // public string Photos { get; set; } 
         // public string ManufacturerId { get; set; } 
         // public string Comments { get; set; } 
