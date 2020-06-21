@@ -1,18 +1,16 @@
-using System.Collections.Generic;
-using Application.Manufacturers;
+using Application.Products;
 using AutoMapper;
 using Domain;
 
-namespace Application.Products
+namespace Application.Manufacturers
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<Create.Command, Product>();
-
-            CreateMap<Product, ProductDto>();
-            CreateMap<Manufacturer, ManufacturerDto>();
+            CreateMap<Manufacturer, ManufacturerDto>()
+                .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.Name));
+            CreateMap<Product, ManufacturersProductDto>();
             CreateMap<Comment, CommentDto>()
                 .ForMember(d => d.AuthorName, o => o.MapFrom(s => s.Author.DisplayName));
         }

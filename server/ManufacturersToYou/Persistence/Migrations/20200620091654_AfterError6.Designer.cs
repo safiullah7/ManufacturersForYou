@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200620091654_AfterError6")]
+    partial class AfterError6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,33 +100,6 @@ namespace Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Domain.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("AuthorId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("Domain.Feature", b =>
                 {
                     b.Property<Guid>("Id")
@@ -157,9 +132,6 @@ namespace Persistence.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("City")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
@@ -196,9 +168,6 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -233,8 +202,6 @@ namespace Persistence.Migrations
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("CreatedById");
 
@@ -373,17 +340,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Domain.Comment", b =>
-                {
-                    b.HasOne("Domain.AppUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
-
-                    b.HasOne("Domain.Product", "Product")
-                        .WithMany("Comments")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("Domain.Feature", b =>
                 {
                     b.HasOne("Domain.Product", "Product")
@@ -407,10 +363,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Product", b =>
                 {
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Domain.AppUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");

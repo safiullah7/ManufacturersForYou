@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Persistence;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Domain;
 
 namespace ExtensionMethods
 {
@@ -15,8 +17,16 @@ namespace ExtensionMethods
         {
             services.AddDbContext<DataContext>(opt =>
             {
+                opt.UseLazyLoadingProxies();
                 opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
+        }
+        public static void AddIdentityConfigurations(this IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<AppUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
         }
         public static void UseCustomConfigureForMigrateAndSeedDb(this IApplicationBuilder app)
         {
@@ -25,10 +35,11 @@ namespace ExtensionMethods
                 try
                 {
                     var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
                     var db = context.Database;
                     db.EnsureCreated();
                     db.Migrate();
-                    Seed.SeedData(context);
+                    Seed.SeedData(context, userManager).Wait();
                 }
                 catch(Exception ex)
                 {

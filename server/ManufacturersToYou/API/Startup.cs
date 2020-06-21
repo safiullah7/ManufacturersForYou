@@ -17,6 +17,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistence;
 using ExtensionMethods;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Authentication;
 
 namespace API
 {
@@ -36,6 +38,8 @@ namespace API
             services.AddDbContextExtension(Configuration);
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(List.Handler));
+            services.AddIdentityConfigurations();
+            services.TryAddSingleton<ISystemClock, SystemClock>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
