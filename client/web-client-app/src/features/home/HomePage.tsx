@@ -31,26 +31,7 @@ const HomePage = () => {
     return (
         <div>
             <Grid>
-                {/* <Grid.Column width={4}>
-                    {loadingInitial && page === 0 ? (
-                        <ActivityListItemPlaceholder />
-                    ) : (
-                            <InfiniteScroll
-                                pageStart={0}
-                                loadMore={handleGetNext}
-                                hasMore={!loadingNext && page + 1 < totalPages}
-                                initialLoad={false}
-                            >
-                                <ActivityList />
-                            </InfiniteScroll>
-                        )}
-                </Grid.Column> */}
                 <Grid.Column width={16}>
-                    {/* {loadManufacturers && manufacturersByName.map((manufacturer) => (
-                        <div>
-                            name is : {manufacturer.name}
-                        </div>
-                    ))} */}
                     {loadingManufacturers && page === 0 ? (
                         <ManufactureListItemPlaceholder />
                     ) : (
