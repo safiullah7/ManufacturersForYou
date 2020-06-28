@@ -8,6 +8,7 @@ export interface IManufacturer {
     name: string,
     city: string,
     category: string,
+    // imageUrl: string,
     productsCount: number,
     products: IProduct[]
 }

@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Grid } from 'semantic-ui-react'
 import { RootStore, RootStoreContext } from '../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite';
+import InfiniteScroll from 'react-infinite-scroller';
+import ManufactureList from '../manufacturers/ManufactureList';
+import ManufactureListItemPlaceholder from '../manufacturers/ManufactureListItemPlaceholder';
 
 const HomePage = () => {
     const rootStore = useContext(RootStoreContext);
@@ -10,8 +13,7 @@ const HomePage = () => {
         loadingManufacturers,
         setPage,
         page,
-        totalPages,
-        manufacturersByName
+        totalPages
     } = rootStore.manufacturerStore;
 
     const [loadingNext, setLoadingNext] = useState(false);
@@ -44,11 +46,23 @@ const HomePage = () => {
                         )}
                 </Grid.Column> */}
                 <Grid.Column width={16}>
-                    {loadManufacturers && manufacturersByName.map((manufacturer) => (
+                    {/* {loadManufacturers && manufacturersByName.map((manufacturer) => (
                         <div>
                             name is : {manufacturer.name}
                         </div>
-                    ))}
+                    ))} */}
+                    {loadingManufacturers && page === 0 ? (
+                        <ManufactureListItemPlaceholder />
+                    ) : (
+                            <InfiniteScroll
+                                pageStart={0}
+                                loadMore={handleGetNext}
+                                hasMore={!loadingNext && page + 1 < totalPages}
+                                initialLoad={false}
+                            >
+                                <ManufactureList />
+                            </InfiniteScroll>
+                        )}
                 </Grid.Column>
 
                 <Grid.Column width={10}>

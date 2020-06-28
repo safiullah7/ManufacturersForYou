@@ -10,7 +10,7 @@ namespace Application.Manufacturers
         public string Name { get; set; }
         public string City { get; set; }
         public string Category { get; set; }
-        public int ProductsCount { get; set; }
+        // public int ProductsCount { get; set; } 
         public ICollection<ManufacturersProductDto> Products { get; set; }
     }
 }
