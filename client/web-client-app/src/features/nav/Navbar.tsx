@@ -12,7 +12,7 @@ const Navbar = () => {
                     Janjua Traders
                 </Menu.Item>
 
-                <Menu.Item name='Home' as={NavLink} to='/' />
+                <Menu.Item name='Home' as={NavLink} to='/home' />
                 
                 <Menu.Item name='Manufacturers' as={NavLink} to='/manufacturers' />
 

@@ -19,6 +19,7 @@ using Persistence;
 using ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication;
+using FluentValidation.AspNetCore;
 
 namespace API
 {
@@ -34,15 +35,14 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(opt =>
-            {
-                opt.AddPolicy("CorsPolicy", policy =>
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-                        // .WithExposedHeaders("WWW-Authenticate")
+            services.AddCors(opt => {
+                opt.AddPolicy("CorsPolicy", policy => {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000").AllowCredentials();
                 });
             });
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(cfg => {
+                cfg.RegisterValidatorsFromAssemblyContaining<Create>(); // only need to add for one. auto for rest Application project
+            });
             services.AddDbContextExtension(Configuration);
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(List.Handler));
@@ -61,12 +61,14 @@ namespace API
                 // app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            
             app.UseCors("CorsPolicy");
+            
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
