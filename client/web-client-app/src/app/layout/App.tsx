@@ -9,6 +9,7 @@ import ProductsPage from '../../features/products/ProductsPage';
 import ProfilePage from '../../features/profile/ProfilePage';
 import NotFound from './NotFound';
 import RedirectToHome from '../../features/home/RedirectToHome';
+import { observer } from 'mobx-react-lite';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   return (
@@ -36,4 +37,4 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
   );
 }
 
-export default withRouter(App);
+export default withRouter(observer(App));

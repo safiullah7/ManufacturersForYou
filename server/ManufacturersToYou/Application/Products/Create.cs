@@ -13,6 +13,7 @@ namespace Application.Products
     {
         public class Command : IRequest
         {
+            public Guid ManufacturerId { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
             // public string Features { get; set; }
@@ -20,6 +21,7 @@ namespace Application.Products
             public decimal? Price { get; set; }
             // public decimal? OldPrice { get; set; }
             public string ImageUrl { get; set; }
+            public int Discount { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -42,6 +44,7 @@ namespace Application.Products
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+                // map AppUser, Manufacturer in the product
                 var product = _mapper.Map<Command, Product>(request);
 
                 _context.Products.Add(product);

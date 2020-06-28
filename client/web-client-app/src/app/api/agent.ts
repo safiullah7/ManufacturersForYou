@@ -1,3 +1,4 @@
+import { IProduct, IManufacturer, IManufacturersEnvelope } from './../models/manufacturer';
 import axios, { AxiosResponse } from 'axios';
 import { history } from '../..';
 import { toast } from 'react-toastify';
@@ -17,6 +18,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(undefined, error => { 
     //first param is when successful req, second when promise rejected
+    debugger;
     if (error.message === 'Network Error' && !error.response) {
         toast.error('Network Error - make sure the API is running!');
     }
@@ -50,11 +52,27 @@ const requests = {
 };
 
 const products = {
-    list: (): Promise<IActivity[]> => requests.get('/activities'),
+    list: (): Promise<IProduct[]> => requests.get('/activities'),
     details: (id: string) => requests.get(`/activities/${id}`),
-    create: (activity: IActivity) => requests.post('/activities', activity),
-    update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
+    create: (activity: IProduct) => requests.post('/activities', activity),
+    update: (activity: IProduct) => requests.put(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del(`/activities/${id}`),
     attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
     unattend: (id: string) => requests.del(`/activities/${id}/attend`)
 };
+
+const manufacturers = {
+    list: (params: URLSearchParams): Promise<IManufacturersEnvelope> => axios.get('/manufacturers').then(responseBody),
+    details: (id: string) => requests.get(`/activities/${id}`),
+    create: (activity: IManufacturer) => requests.post('/activities', activity),
+    update: (activity: IManufacturer) => requests.put(`/activities/${activity.id}`, activity),
+    delete: (id: string) => requests.del(`/activities/${id}`),
+    attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
+    unattend: (id: string) => requests.del(`/activities/${id}/attend`)
+};
+
+export default {
+    products,
+    manufacturers
+};
+  

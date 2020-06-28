@@ -1,20 +1,40 @@
+export interface IManufacturersEnvelope {
+    manufacturers: IManufacturer[],
+    manufacturersCount: number
+}
+
+export interface IManufacturer {
+    id: string,
+    name: string,
+    city: string,
+    category: string,
+    productsCount: number,
+    products: IProduct[]
+}
+
 export interface IProduct {
     id: string,
     name: string,
     description: string,
     category: string,
-    price: string,
-    oldPrice: string,
+    price: number,
+    oldPrice: number,
     imageUrl: string,
     // city: string,
     photos: IPhoto[],
-    comments: IComment[],
+    features: IFeature[],
+    comments: IComment[]
 }
 
 export interface IPhoto {
     id: string,
     url: string,
     isMain: boolean
+}
+
+export interface IFeature {
+    key: string,
+    value: string
 }
 
 export interface IComment {
