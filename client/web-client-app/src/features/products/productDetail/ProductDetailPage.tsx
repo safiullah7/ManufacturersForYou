@@ -23,21 +23,21 @@ interface DetailParams {
 }
 
 const ProductDetailPage: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
-    // const rootStore = useContext(RootStoreContext);
-    // const {
-    //     loadManufacturer,
-    //     loadingInitial,
-    //     manufacturer
-    // } = rootStore.manufacturerStore;
+    const rootStore = useContext(RootStoreContext);
+    const {
+        loadManufacturer,
+        loadingInitial,
+        manufacturer
+    } = rootStore.manufacturerStore;
 
-    // useEffect(() => {
-    //     loadManufacturer(match.params.id);
-    // }, [loadManufacturer, match.params.id, history]);
-    // const product = manufacturer?.products.filter(product => product.id === match.params.id)[0];
+    useEffect(() => {
+        loadManufacturer(match.params.id);
+    }, [loadManufacturer, match.params.id, history]);
+    const product = manufacturer?.products.filter(product => product.id === match.params.id)[0];
 
-    // if (loadingInitial) return <LoadingComponent content='Loading manufacturer...' />;
+    if (loadingInitial) return <LoadingComponent content='Loading manufacturer...' />;
 
-    // if (!manufacturer) return <h2>Manufacturer not found</h2>;
+    if (!manufacturer) return <h2>Manufacturer not found</h2>;
 
     return (
         <Segment.Group>

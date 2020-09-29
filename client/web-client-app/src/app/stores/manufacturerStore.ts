@@ -54,7 +54,6 @@ export class ManufacturerStore {
     }
 
     @action loadManufacturer = async (id: string) => {
-        debugger;
         let manufacturer = this.getManufacturer(id);
         if (manufacturer) {
             this.manufacturer = manufacturer;

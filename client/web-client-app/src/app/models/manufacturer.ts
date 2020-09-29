@@ -9,6 +9,7 @@ export interface IManufacturer {
     city: string,
     category: string,
     imageUrl: string,
+    description: string,
     productsCount: number,
     products: IProduct[]
 }
