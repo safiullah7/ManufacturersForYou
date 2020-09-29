@@ -10,7 +10,7 @@ const HomePage = () => {
     const rootStore = useContext(RootStoreContext);
     const {
         loadManufacturers,
-        loadingManufacturers,
+        loadingInitial,
         setPage,
         page,
         totalPages
@@ -30,9 +30,9 @@ const HomePage = () => {
         
     return (
         <div>
-            <Grid>
-                <Grid.Column width={16}>
-                    {loadingManufacturers && page === 0 ? (
+            {/* <Grid>
+                <Grid.Column width={16}> */}
+                    {loadingInitial && page === 0 ? (
                         <ManufactureListItemPlaceholder />
                     ) : (
                             <InfiniteScroll
@@ -44,12 +44,8 @@ const HomePage = () => {
                                 <ManufactureList />
                             </InfiniteScroll>
                         )}
-                </Grid.Column>
-
-                <Grid.Column width={10}>
-                    {/* <Loader active={loadingNext} /> */}
-                </Grid.Column>
-            </Grid>
+                {/* </Grid.Column>
+            </Grid> */}
         </div>
     )
 }

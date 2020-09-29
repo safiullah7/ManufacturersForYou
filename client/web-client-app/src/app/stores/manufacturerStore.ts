@@ -1,5 +1,6 @@
+import { IManufacturer } from './../models/manufacturer';
 import { RootStore } from './rootStore';
-import {observable, action, computed, runInAction} from 'mobx'
+import {observable, action, computed, runInAction, toJS} from 'mobx'
 import agent from '../api/agent';
 
 const LIMIT = 2;
@@ -11,7 +12,8 @@ export class ManufacturerStore {
     }
 
     @observable manufacturersRegistry = new Map();
-    @observable loadingManufacturers = false;
+    @observable manufacturer: IManufacturer | null = null;
+    @observable loadingInitial = false;
     @observable page = 0;
     @observable manufacturersCount = 0;
 
@@ -33,7 +35,7 @@ export class ManufacturerStore {
     }
 
     @action loadManufacturers = async () => {
-        this.loadingManufacturers = true;
+        this.loadingInitial = true;
         try {
             const manufacturersEnvelope = await agent.manufacturers.list(this.axiosParams);
             const {manufacturers, manufacturersCount} = manufacturersEnvelope;
@@ -42,13 +44,42 @@ export class ManufacturerStore {
                     this.manufacturersRegistry.set(manufacturer.id, manufacturer);
                 });
                 this.manufacturersCount = manufacturersCount;
-                this.loadingManufacturers = false;
+                this.loadingInitial = false;
             })
         } catch (error) {
             runInAction('loading manufacturers error', () => {
-                this.loadingManufacturers = false;
+                this.loadingInitial = false;
             })
         }
+    }
+
+    @action loadManufacturer = async (id: string) => {
+        debugger;
+        let manufacturer = this.getManufacturer(id);
+        if (manufacturer) {
+            this.manufacturer = manufacturer;
+            return toJS(manufacturer);
+        } else {
+            this.loadingInitial = true;
+            try {
+                manufacturer = await agent.manufacturers.details(id);
+                runInAction('getting activity', () => {
+                    this.manufacturer = manufacturer;
+                    this.manufacturersRegistry.set(manufacturer.id, manufacturer);
+                    this.loadingInitial = false;
+                  });
+                  return manufacturer;
+            } catch (error) {
+                runInAction('load manufacturer error', () => {
+                    this.loadingInitial = false;
+                });
+                console.log(error);
+            }
+        }
+    }
+
+    getManufacturer = (id: string) => {
+        return this.manufacturersRegistry.get(id);
     }
 
     @action setPage = (page: number) => {

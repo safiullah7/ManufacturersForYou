@@ -43,7 +43,7 @@ namespace API.Middleware
                     break;
 
                 case Exception e:
-                    logger.LogError("SERVER ERROR");
+                    logger.LogError("SERVER ERROR" + e.Message);
                     errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;

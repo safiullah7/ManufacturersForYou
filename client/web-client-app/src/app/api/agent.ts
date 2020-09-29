@@ -62,8 +62,8 @@ const products = {
 };
 
 const manufacturers = {
-    list: (params: URLSearchParams): Promise<IManufacturersEnvelope> => axios.get('/manufacturers').then(responseBody),
-    details: (id: string) => requests.get(`/activities/${id}`),
+    list: (params: URLSearchParams): Promise<IManufacturersEnvelope> => axios.get('/manufacturers', {params: params}).then(responseBody),
+    details: (id: string) => requests.get(`/manufacturers/${id}`),
     create: (activity: IManufacturer) => requests.post('/activities', activity),
     update: (activity: IManufacturer) => requests.put(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del(`/activities/${id}`),

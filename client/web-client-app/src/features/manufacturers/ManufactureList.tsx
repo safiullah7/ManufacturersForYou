@@ -1,7 +1,10 @@
 import React, { useContext, Fragment } from 'react'
 import { RootStoreContext } from '../../app/stores/rootStore';
-import { Card, Image, Button } from 'semantic-ui-react';
+import { Card, Segment } from 'semantic-ui-react';
 import { IManufacturer } from '../../app/models/manufacturer';
+import ManufacturerListItem from './ManufacturerListItem';
+import { observer } from 'mobx-react-lite';
+import ProductListItem from '../products/ProductListItem';
 
 const ManufactureList = () => {
     const rootStore = useContext(RootStoreContext);
@@ -10,28 +13,21 @@ const ManufactureList = () => {
     } = rootStore.manufacturerStore;
     return (
         <Fragment>
-            <Card.Group doubling itemsPerRow={3} stackable>
+            <Card.Group doubling itemsPerRow={3} >
                 {manufacturersByName.map((manufacturer: IManufacturer) => (
-                    <Card key={manufacturer.id}>-
-                      <Image src={"manufacturer.imageurl"} />-
-                    <Card.Content>
-                        <Fragment>
-                          <Card.Header>{manufacturer.name}</Card.Header>
-                          <Card.Meta>{manufacturer.city}</Card.Meta>
-                          <Card.Description>{manufacturer.products.length}</Card.Description>
-                        </Fragment>
-                    </Card.Content>
-      
-                    <Card.Content extra>
-                      <Button primary>
-                        Check Products
-                      </Button>
-                    </Card.Content>
-                  </Card>
+                  <Segment key={manufacturer.id} >
+                    <ManufacturerListItem manufacturer={manufacturer} />
+                    
+                    <Card.Group doubling itemsPerRow={5} stackable>
+                      {manufacturer.products && manufacturer.products.map((product) => (
+                        <ProductListItem key={product.id} product={product} />
+                      ))}
+                    </Card.Group>
+                  </Segment>
                 ))}
             </Card.Group>
         </Fragment>
     )
 }
 
-export default ManufactureList
+export default observer(ManufactureList);

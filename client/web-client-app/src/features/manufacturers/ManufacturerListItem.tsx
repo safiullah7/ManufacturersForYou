@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { Card, Image, Button } from 'semantic-ui-react'
 import { IManufacturer } from '../../app/models/manufacturer'
+import { observer } from 'mobx-react-lite'
+import { Link } from 'react-router-dom'
 
 interface IProps {
     manufacturer: IManufacturer
@@ -19,11 +21,11 @@ const ManufacturerListItem: React.FC<IProps> = ({manufacturer}) => {
                     </Fragment>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button primary>Check Products</Button>
+                    <Button as={Link} to={`/manufacturers/${manufacturer.id}`} primary>Check Products</Button>
                 </Card.Content>
             </Card>
         </Fragment>
     )
 }
 
-export default ManufacturerListItem
+export default observer(ManufacturerListItem);

@@ -10,6 +10,8 @@ import ProfilePage from '../../features/profile/ProfilePage';
 import NotFound from './NotFound';
 import RedirectToHome from '../../features/home/RedirectToHome';
 import { observer } from 'mobx-react-lite';
+import ManufacturerPage from '../../features/manufacturers/ManufacturerPage';
+import ProductDetailPage from '../../features/products/productDetail/ProductDetailPage';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   return (
@@ -24,7 +26,9 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   some route */}
               <Route exact path='/home' component={HomePage} />
               <Route exact path='/manufacturers' component={ManufacturersPage} />
-              <Route path='/products' component={ProductsPage} />
+              <Route path='/manufacturers/:id' component={ManufacturerPage} />
+              <Route exact path='/products' component={ProductsPage} />
+              <Route path='/products/:id' component={ProductDetailPage} />
               <Route path='/profile/:username' component={ProfilePage} />
               <Route component={NotFound} />
               {/* this will load <NotFound/> comp in every route.
